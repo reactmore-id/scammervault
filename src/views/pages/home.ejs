@@ -1,0 +1,44 @@
+<section class="hero">
+  <h1>Komunitas Pelaporan Penipuan</h1>
+  <p>Laporkan rekening, ID Facebook, Telegram, WhatsApp, dan identitas lainnya agar orang lain lebih aman.</p>
+</section>
+
+<form class="search" method="get" action="/">
+  <input type="text" name="q" placeholder="Cari identitas/kategori modus..." value="<%= q %>" />
+  <button>Cari</button>
+</form>
+
+<section class="grid">
+  <article>
+    <h2>Buat Laporan</h2>
+    <form method="post" action="/reports" class="form">
+      <input name="reporterName" placeholder="Nama pelapor (opsional)" />
+      <select name="contactType" required>
+        <option value="">Pilih Jenis</option><option>Rekening</option><option>ID Facebook</option><option>ID Telegram</option><option>Nomor WhatsApp</option>
+      </select>
+      <input name="contactValue" placeholder="Contoh: 1234567890 / @username" required />
+      <input name="category" placeholder="Kategori modus" required />
+      <input name="amount" placeholder="Nominal kerugian (opsional)" />
+      <input name="incidentDate" type="date" />
+      <textarea name="description" placeholder="Ceritakan kronologi..." required></textarea>
+      <button>Kirim Laporan</button>
+    </form>
+  </article>
+  <article>
+    <h2>10 Laporan Terakhir</h2>
+    <% if (!reports.length) { %><p>Belum ada laporan.</p><% } %>
+    <div class="cards">
+      <% reports.forEach((r) => { %>
+        <div class="card">
+          <strong><%= r.contact_type %>: <%= r.contact_value %></strong>
+          <p><%= r.category %> • <%= r.incident_date || 'Tanggal tidak disebut' %></p>
+          <small><%= r.description %></small>
+          <div class="card-footer">
+            <span>Status: <%= r.status %></span>
+            <% if (currentUser) { %><a href="/reports/<%= r.id %>/appeal">Ajukan Banding</a><% } %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </article>
+</section>

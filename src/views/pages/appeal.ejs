@@ -1,0 +1,6 @@
+<h1>Banding Laporan</h1>
+<p>Target: <strong><%= report.contact_type %> - <%= report.contact_value %></strong></p>
+<form method="post" action="/reports/<%= report.id %>/appeal" class="form auth">
+  <textarea name="reason" placeholder="Jelaskan alasan banding Anda..." required></textarea>
+  <button>Kirim Banding</button>
+</form>
